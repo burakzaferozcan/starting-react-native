@@ -1,14 +1,41 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [result, setResult] = useState("");
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-      <View style={styles.subContainer}>
-        <Text style={styles.textStyle}>Test text</Text>
-      </View>
+      <Text style={{ color: "#E4B1F0", fontSize: 20, marginBottom: 20 }}>
+        Welcome {result}
+      </Text>
+      <Text style={styles.labelStyle}>Name</Text>
+      <TextInput
+        placeholder="Enter Your Name"
+        style={styles.textInputStyle}
+        onChangeText={setName}
+        value={name}
+      />
+      <Text style={styles.labelStyle}>Last Name</Text>
+      <TextInput
+        placeholder="Enter Your Last Name"
+        style={styles.textInputStyle}
+        onChangeText={setLastName}
+        value={lastName}
+      />
+      <Pressable
+        style={({ pressed }) => [
+          styles.buttonStyle,
+          {
+            backgroundColor: pressed ? "#433878" : "#7E60BF",
+          },
+        ]}
+        onPress={() => setResult(name + " " + lastName)}
+      >
+        <Text style={styles.buttonTextStyle}>Save</Text>
+      </Pressable>
     </View>
   );
 }
@@ -20,18 +47,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  subContainer: {
-    backgroundColor: "black",
+  labelStyle: {
+    textAlign: "justify",
+    width: "80%",
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#7E60BF",
+  },
+  textInputStyle: {
+    borderWidth: 1,
+    width: "80%",
+    height: 50,
+    borderRadius: 5,
+    marginVertical: 10,
+    textAlign: "center",
+    color: "#433878",
+    fontWeight: "bold",
+    borderColor: "#E4B1F0",
+  },
+  buttonStyle: {
     alignItems: "center",
     justifyContent: "center",
-    width: 100,
-    height: 100,
-    borderRadius: 25,
-    borderWidth: 5,
-    borderColor: "red",
+    width: "80%",
+    height: 50,
+    borderRadius: 5,
+    marginVertical: 10,
+    textAlign: "center",
   },
-  textStyle: {
-    color: "red",
-    fontWeight: "900",
+  buttonTextStyle: {
+    color: "#fff",
+    fontWeight: "500",
+    fontSize: 17,
   },
 });
