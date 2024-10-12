@@ -1,29 +1,42 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import Loading from "./src/components/Loading";
 
 export default function App() {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: "#E4B1F0", fontSize: 20, marginBottom: 20 }}>
-        Welcome {result}
-      </Text>
-      <Text style={styles.labelStyle}>Name</Text>
-      <TextInput
-        placeholder="Enter Your Name"
-        style={styles.textInputStyle}
-        onChangeText={setName}
-        value={name}
+      <Image
+        source={require("./assets/images/login1.png")}
+        style={styles.loginImage}
       />
-      <Text style={styles.labelStyle}>Last Name</Text>
+      <Text style={styles.title}>WELCOME</Text>
+      <Text style={styles.labelStyle}>Email</Text>
       <TextInput
-        placeholder="Enter Your Last Name"
+        inputMode="email"
+        placeholder="Enter Your Email"
         style={styles.textInputStyle}
-        onChangeText={setLastName}
-        value={lastName}
+        onChangeText={setEmail}
+        value={email}
+      />
+      <Text style={styles.labelStyle}>Password</Text>
+      <TextInput
+        secureTextEntry={true}
+        placeholder="Enter Your Password"
+        style={styles.textInputStyle}
+        onChangeText={setPassword}
+        value={password}
       />
       <Pressable
         style={({ pressed }) => [
@@ -32,10 +45,13 @@ export default function App() {
             backgroundColor: pressed ? "#433878" : "#7E60BF",
           },
         ]}
-        onPress={() => setResult(name + " " + lastName)}
+        onPress={() => setIsLoading(true)}
       >
         <Text style={styles.buttonTextStyle}>Save</Text>
       </Pressable>
+      {isLoading ? (
+        <Loading changeIsLoading={() => setIsLoading(false)} />
+      ) : null}
     </View>
   );
 }
@@ -43,20 +59,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFE1FF",
     alignItems: "center",
     justifyContent: "center",
   },
   labelStyle: {
     textAlign: "justify",
-    width: "80%",
+    width: "90%",
     fontSize: 17,
     fontWeight: "bold",
     color: "#7E60BF",
   },
   textInputStyle: {
     borderWidth: 1,
-    width: "80%",
+    width: "90%",
     height: 50,
     borderRadius: 5,
     marginVertical: 10,
@@ -68,7 +84,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: "center",
     justifyContent: "center",
-    width: "80%",
+    width: "90%",
     height: 50,
     borderRadius: 5,
     marginVertical: 10,
@@ -78,5 +94,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "500",
     fontSize: 17,
+  },
+  loginImage: {
+    width: 100,
+    height: 100,
+    objectFit: "cover",
+  },
+  title: {
+    color: "#433878",
+    fontSize: 20,
+    marginVertical: 20,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
