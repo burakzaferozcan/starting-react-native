@@ -8,6 +8,8 @@ import {
   View,
 } from "react-native";
 import Loading from "../components/Loading";
+import CustomTextInput from "../components/CustomTextInput";
+import CustomButton from "../components/CustomButton";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -22,44 +24,32 @@ const LoginPage = ({ navigation }) => {
         style={styles.loginImage}
       />
       <Text style={styles.title}>WELCOME</Text>
-      <Text style={styles.labelStyle}>Email</Text>
-      <TextInput
-        inputMode="email"
-        placeholder="Enter Your Email"
-        style={styles.textInputStyle}
-        onChangeText={setEmail}
-        value={email}
+      <CustomTextInput
+        title="Email"
+        isSecureText={false}
+        handeOnChangeText={setEmail}
+        handleValue={email}
+        handlePlaceholder="Enter Your Email"
       />
-      <Text style={styles.labelStyle}>Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        placeholder="Enter Your Password"
-        style={styles.textInputStyle}
-        onChangeText={setPassword}
-        value={password}
+      <CustomTextInput
+        title="Password"
+        isSecureText={true}
+        handeOnChangeText={setPassword}
+        handleValue={password}
+        handlePlaceholder="Enter Your Password"
       />
-      <Pressable
-        style={({ pressed }) => [
-          styles.buttonStyle,
-          {
-            backgroundColor: pressed ? "#433878" : "#7E60BF",
-          },
-        ]}
-        onPress={() => setIsLoading(true)}
-      >
-        <Text style={styles.buttonTextStyle}>Login</Text>
-      </Pressable>
-      <Pressable
-        style={({ pressed }) => [
-          styles.buttonStyle,
-          {
-            backgroundColor: pressed ? "#E4B1F0" : "#FFE1FF",
-          },
-        ]}
-        onPress={() => navigation.navigate("SignUp")}
-      >
-        <Text style={styles.signupButtonTextStyle}>Signup</Text>
-      </Pressable>
+      <CustomButton
+        buttonText="Login"
+        handleOnPress={() => setIsLoading(true)}
+        buttonTextColor="#fff"
+        buttonBackgroundColors={["#433878", "#7E60BF"]}
+      />
+      <CustomButton
+        buttonText="Signup"
+        buttonTextColor="#7E60BF"
+        handleOnPress={() => navigation.navigate("SignUp")}
+        buttonBackgroundColors={["#E4B1F0", "#FFE1FF"]}
+      />
       {isLoading ? (
         <Loading changeIsLoading={() => setIsLoading(false)} />
       ) : null}
@@ -74,38 +64,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  labelStyle: {
-    textAlign: "justify",
-    width: "90%",
-    fontSize: 17,
-    fontWeight: "bold",
-    color: "#7E60BF",
-  },
-  textInputStyle: {
-    borderWidth: 1,
-    width: "90%",
-    height: 50,
-    borderRadius: 5,
-    marginVertical: 10,
-    textAlign: "center",
-    color: "#433878",
-    fontWeight: "bold",
-    borderColor: "#E4B1F0",
-  },
-  buttonStyle: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: "90%",
-    height: 50,
-    borderRadius: 5,
-    marginVertical: 10,
-    textAlign: "center",
-  },
-  buttonTextStyle: {
-    color: "#fff",
-    fontWeight: "500",
-    fontSize: 17,
-  },
+
   loginImage: {
     width: 100,
     height: 100,
@@ -117,10 +76,5 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
     fontWeight: "bold",
-  },
-  signupButtonTextStyle: {
-    color: "#7E60BF",
-    fontWeight: "500",
-    fontSize: 17,
   },
 });

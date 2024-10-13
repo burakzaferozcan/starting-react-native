@@ -4,7 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 const UserStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen component={HomePage} name="Home" />
       <Stack.Screen component={ProfilePage} name="Profile" />
     </Stack.Navigator>
