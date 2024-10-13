@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Loading from "../components/Loading";
 
-const LoginPage = () => {
+const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
@@ -47,7 +47,18 @@ const LoginPage = () => {
         ]}
         onPress={() => setIsLoading(true)}
       >
-        <Text style={styles.buttonTextStyle}>Save</Text>
+        <Text style={styles.buttonTextStyle}>Login</Text>
+      </Pressable>
+      <Pressable
+        style={({ pressed }) => [
+          styles.buttonStyle,
+          {
+            backgroundColor: pressed ? "#E4B1F0" : "#FFE1FF",
+          },
+        ]}
+        onPress={() => navigation.navigate("SignUp")}
+      >
+        <Text style={styles.signupButtonTextStyle}>Signup</Text>
       </Pressable>
       {isLoading ? (
         <Loading changeIsLoading={() => setIsLoading(false)} />
@@ -106,5 +117,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  signupButtonTextStyle: {
+    color: "#7E60BF",
+    fontWeight: "500",
+    fontSize: 17,
   },
 });

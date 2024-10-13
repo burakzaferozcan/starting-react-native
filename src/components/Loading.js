@@ -16,7 +16,7 @@ const Loading = ({ changeIsLoading }) => {
       >
         <Text style={styles.closeButton}>X</Text>
       </Pressable>
-      {/* <ActivityIndicator size={"large"} color={"#7E60BF"} /> */}
+      <ActivityIndicator size={"large"} color={"#7E60BF"} />
       <Text style={styles.loadingText}>LOADING</Text>
     </View>
   );
