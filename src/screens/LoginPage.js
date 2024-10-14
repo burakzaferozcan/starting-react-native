@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import Loading from "../components/Loading";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
@@ -14,7 +7,6 @@ import CustomButton from "../components/CustomButton";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   return (
