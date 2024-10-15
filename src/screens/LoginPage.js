@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Loading from "../components/Loading";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setEmail, setIsLoading, setPassword } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  //! userSlice ieçrisindeki verilerib okunması
+  const { email, password, isLoading } = useSelector((state) => state.user);
+
+  //! userSLice içerisindeki yapıları kullanma veya veri gönderme
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -19,20 +23,20 @@ const LoginPage = ({ navigation }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handeOnChangeText={setEmail}
+        handleChangeText={(text) => dispatch(setEmail(text))}
         handleValue={email}
         handlePlaceholder="Enter Your Email"
       />
       <CustomTextInput
         title="Password"
         isSecureText={true}
-        handeOnChangeText={setPassword}
+        handleChangeText={(text) => dispatch(setPassword(text))}
         handleValue={password}
         handlePlaceholder="Enter Your Password"
       />
       <CustomButton
         buttonText="Login"
-        handleOnPress={() => setIsLoading(true)}
+        handleOnPress={() => dispatch(setIsLoading(true))}
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
@@ -43,7 +47,7 @@ const LoginPage = ({ navigation }) => {
         buttonBackgroundColors={["#E4B1F0", "#FFE1FF"]}
       />
       {isLoading ? (
-        <Loading changeIsLoading={() => setIsLoading(false)} />
+        <Loading changeIsLoading={() => dispatch(setIsLoading(false))} />
       ) : null}
     </View>
   );
