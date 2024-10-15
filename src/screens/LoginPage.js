@@ -4,7 +4,12 @@ import Loading from "../components/Loading";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setIsLoading, setPassword } from "../redux/userSlice";
+import {
+  setEmail,
+  setIsLoading,
+  setLogin,
+  setPassword,
+} from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
   //! userSlice ieçrisindeki verilerib okunması
@@ -36,7 +41,7 @@ const LoginPage = ({ navigation }) => {
       />
       <CustomButton
         buttonText="Login"
-        handleOnPress={() => dispatch(setIsLoading(true))}
+        handleOnPress={() => dispatch(setLogin())}
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
