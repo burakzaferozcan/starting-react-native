@@ -9,10 +9,9 @@ import { setEmail, setIsLoading, setPassword, login } from "../redux/userSlice";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const[email,setEmail]=useState("");
 
   //! userSlice ieçrisindeki verilerib okunması
-  const { isLoading } = useSelector((state) => state.user);
+  const { isLoading, error } = useSelector((state) => state.user);
 
   //! userSLice içerisindeki yapıları kullanma veya veri gönderme
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const LoginPage = ({ navigation }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleChangeText={(text) => setEmail(text)}
+        handleChangeText={(text) => setEmail(text.toLowerCase())}
         handleValue={email}
         handlePlaceholder="Enter Your Email"
       />
@@ -38,6 +37,7 @@ const LoginPage = ({ navigation }) => {
         handleValue={password}
         handlePlaceholder="Enter Your Password"
       />
+      {error && <Text style={styles.errorMessage}>{error}</Text>}
       <CustomButton
         buttonText="Login"
         handleOnPress={() => dispatch(login({ email, password }))}
@@ -76,5 +76,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
     fontWeight: "bold",
+  },
+  errorMessage: {
+    color: "red",
+    fontWeight: "700",
   },
 });
