@@ -4,16 +4,15 @@ import Loading from "../components/Loading";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setEmail,
-  setIsLoading,
-  setLogin,
-  setPassword,
-} from "../redux/userSlice";
+import { setEmail, setIsLoading, setPassword, login } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const[email,setEmail]=useState("");
+
   //! userSlice ieçrisindeki verilerib okunması
-  const { email, password, isLoading } = useSelector((state) => state.user);
+  const { isLoading } = useSelector((state) => state.user);
 
   //! userSLice içerisindeki yapıları kullanma veya veri gönderme
   const dispatch = useDispatch();
@@ -28,20 +27,20 @@ const LoginPage = ({ navigation }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleChangeText={(text) => dispatch(setEmail(text))}
+        handleChangeText={(text) => setEmail(text)}
         handleValue={email}
         handlePlaceholder="Enter Your Email"
       />
       <CustomTextInput
         title="Password"
         isSecureText={true}
-        handleChangeText={(text) => dispatch(setPassword(text))}
+        handleChangeText={(text) => setPassword(text)}
         handleValue={password}
         handlePlaceholder="Enter Your Password"
       />
       <CustomButton
         buttonText="Login"
-        handleOnPress={() => dispatch(setLogin())}
+        handleOnPress={() => dispatch(login({ email, password }))}
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
