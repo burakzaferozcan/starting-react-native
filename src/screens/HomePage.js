@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import CustomButton from "../components/CustomButton";
@@ -40,6 +41,17 @@ const HomePage = () => {
     });
   };
 
+  const updateData = async () => {
+    try {
+      const lessonData = doc(db, "reactNativeLesson", "C0LJu7OpHqxtfkV9kn1E");
+      await updateDoc(lessonData, {
+        lesson: 8,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text>HomePage</Text>
@@ -63,6 +75,12 @@ const HomePage = () => {
       <CustomButton
         buttonText="Delete Data"
         handleOnPress={deleteData}
+        buttonTextColor="#fff"
+        buttonBackgroundColors={["#433878", "#7E60BF"]}
+      />
+      <CustomButton
+        buttonText="Update Data"
+        handleOnPress={updateData}
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
