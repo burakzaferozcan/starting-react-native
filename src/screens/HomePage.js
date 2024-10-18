@@ -36,7 +36,7 @@ const HomePage = () => {
     try {
       const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
       querySnapshot.forEach((doc) => {
-        allData.push(doc.data());
+        allData.push({ ...doc.data(), id: doc.id });
       });
     } catch (error) {
       console.log(error);
@@ -73,7 +73,7 @@ const HomePage = () => {
       />
       {data.map((item, index) => (
         <Text key={index}>
-          {item.title} - {item.content} - Lesson: {item.lesson}
+          {item.id} - {item.title} - {item.content} - Lesson: {item.lesson}
         </Text>
       ))}
       <CustomButton
