@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   collection,
@@ -44,11 +44,13 @@ const HomePage = () => {
     setData(allData);
   };
 
-  const deleteData = async () => {
-    await deleteDoc(doc(db, "reactNativeLesson", "0FBFJFXnrWulIUJR44xK"));
-    querySnapshot.forEach((doc) => {
-      setData([...data, doc.data()]);
-    });
+  const deleteData = async (value) => {
+    try {
+      await deleteDoc(doc(db, "reactNativeLesson", value));
+      console.log("deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateData = async () => {
@@ -72,9 +74,11 @@ const HomePage = () => {
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
       {data.map((item, index) => (
-        <Text key={index}>
-          {item.id} - {item.title} - {item.content} - Lesson: {item.lesson}
-        </Text>
+        <Pressable key={index} onPress={() => deleteData(item.id)}>
+          <Text>
+            {item.id} - {item.title} - {item.content} - Lesson: {item.lesson}
+          </Text>
+        </Pressable>
       ))}
       <CustomButton
         buttonText="Get Data"
