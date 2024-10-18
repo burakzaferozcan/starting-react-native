@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   collection,
   addDoc,
@@ -13,6 +13,10 @@ import CustomButton from "../components/CustomButton";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, [data]);
 
   const sendData = async () => {
     try {
@@ -28,10 +32,16 @@ const HomePage = () => {
   };
 
   const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
-    querySnapshot.forEach((doc) => {
-      setData([...data, doc.data()]);
-    });
+    const allData = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
+      querySnapshot.forEach((doc) => {
+        allData.push(doc.data());
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setData(allData);
   };
 
   const deleteData = async () => {
