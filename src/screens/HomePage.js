@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   collection,
@@ -13,6 +13,7 @@ import CustomButton from "../components/CustomButton";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
+  const [updateTheData, setUpdateTheData] = useState("");
 
   useEffect(() => {
     getData();
@@ -53,11 +54,11 @@ const HomePage = () => {
     }
   };
 
-  const updateData = async () => {
+  const updateData = async (value) => {
     try {
-      const lessonData = doc(db, "reactNativeLesson", "C0LJu7OpHqxtfkV9kn1E");
+      const lessonData = doc(db, "reactNativeLesson", value);
       await updateDoc(lessonData, {
-        lesson: 8,
+        content: updateTheData,
       });
     } catch (error) {
       console.log(error);
@@ -78,6 +79,12 @@ const HomePage = () => {
           <Text>
             {item.id} - {item.title} - {item.content} - Lesson: {item.lesson}
           </Text>
+          <CustomButton
+            buttonText="Update Data"
+            handleOnPress={() => updateData(item.id)}
+            buttonTextColor="#fff"
+            buttonBackgroundColors={["#433878", "#7E60BF"]}
+          />
         </Pressable>
       ))}
       <CustomButton
@@ -86,17 +93,11 @@ const HomePage = () => {
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
-      <CustomButton
-        buttonText="Delete Data"
-        handleOnPress={deleteData}
-        buttonTextColor="#fff"
-        buttonBackgroundColors={["#433878", "#7E60BF"]}
-      />
-      <CustomButton
-        buttonText="Update Data"
-        handleOnPress={updateData}
-        buttonTextColor="#fff"
-        buttonBackgroundColors={["#433878", "#7E60BF"]}
+      <TextInput
+        value={updateTheData}
+        onChangeText={setUpdateTheData}
+        placeholder="enter your update data"
+        style={{ borderWidth: 1, width: "90%" }}
       />
     </View>
   );
