@@ -4,7 +4,7 @@ import Loading from "../components/Loading";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setIsLoading, setPassword, login } from "../redux/userSlice";
+import { setIsLoading, login, autoLogin } from "../redux/userSlice";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -16,6 +16,9 @@ const LoginPage = ({ navigation }) => {
   //! userSLice içerisindeki yapıları kullanma veya veri gönderme
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, []);
   return (
     <View style={styles.container}>
       <Image
