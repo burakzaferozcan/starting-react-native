@@ -10,10 +10,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import CustomButton from "../components/CustomButton";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [updateTheData, setUpdateTheData] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
@@ -65,6 +69,10 @@ const HomePage = () => {
     }
   };
 
+  const handleLogout = async () => {
+    dispatch(logout());
+  };
+
   return (
     <View style={styles.container}>
       <Text>HomePage</Text>
@@ -98,6 +106,12 @@ const HomePage = () => {
         onChangeText={setUpdateTheData}
         placeholder="enter your update data"
         style={{ borderWidth: 1, width: "90%" }}
+      />
+      <CustomButton
+        buttonText="Logout"
+        handleOnPress={handleLogout}
+        buttonTextColor="#fff"
+        buttonBackgroundColors={["gray", "red"]}
       />
     </View>
   );
