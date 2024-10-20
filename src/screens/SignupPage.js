@@ -2,12 +2,24 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
+import Loading from "../components/Loading";
+
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/userSlice";
 
 const SignupPage = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
+  const handleRegister = () => {
+    dispatch(register({ email, password }));
+  };
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <View style={styles.container}>
       <Image
@@ -38,7 +50,7 @@ const SignupPage = ({ navigation }) => {
       />
       <CustomButton
         buttonText="Sign Up"
-        handleOnPress={() => setIsLoading(true)}
+        handleOnPress={handleRegister}
         buttonTextColor="#fff"
         buttonBackgroundColors={["#433878", "#7E60BF"]}
       />
